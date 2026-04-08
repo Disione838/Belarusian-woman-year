@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Год Белорусской Женщины — 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ════════ ГЛАВНАЯ ════════ -->
+<section id="screen-home" class="screen active">
+  <div class="home-grid">
+    <div class="home-left">
+      <div class="year-badge">2026</div>
+      <h1 class="home-title">
+        <span class="line-sm">Год</span>
+        <span class="line-lg">Белорусской</span>
+        <span class="line-md">Женщины</span>
+      </h1>
+      <p class="home-desc">Интерактивная викторина об истории, культуре и выдающихся женщинах Беларуси</p>
+      <div class="home-score-row" id="home-score-row" style="display:none">
+        <div class="hs-score"><span class="hs-num" id="hs-num">0</span> очков</div>
+        <div class="hs-level" id="hs-level">Новичок</div>
+      </div>
+      <div class="home-actions">
+        <button class="cta-btn" onclick="showScreen('screen-menu')">Начать игру</button>
+        <button class="ghost-btn" onclick="showScreen('screen-results')">Результаты</button>
+      </div>
+    </div>
+    <div class="home-right">
+      <img src="logo.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ════════ МЕНЮ ════════ -->
+<section id="screen-menu" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="showScreen('screen-home')">&#8592; Главная</button>
+    <div class="top-bar-score">
+      <span class="tbs-label">Очки</span>
+      <span class="tbs-val" id="menu-score-val">0</span>
+    </div>
+  </header>
+  <div class="page-head">
+    <h2 class="page-title">Выберите задание</h2>
+    <div class="title-rule"></div>
+  </div>
+  <div class="menu-grid" id="menu-grid">
+    <div class="mcard" data-cat="famous" onclick="startQuiz('famous')">
+      <div class="mcard-num">01</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Известные женщины</h3>
+        <p class="mcard-desc">Выдающиеся белоруски, вписавшие своё имя в историю</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">10 вопросов</span>
+          <div class="mcard-stars" id="stars-famous"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mcard" data-cat="history" onclick="startQuiz('history')">
+      <div class="mcard-num">02</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">История и культура</h3>
+        <p class="mcard-desc">Традиции, праздники и культурное наследие Беларуси</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">10 вопросов</span>
+          <div class="mcard-stars" id="stars-history"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mcard" data-cat="modern" onclick="startQuiz('modern')">
+      <div class="mcard-num">03</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Современность</h3>
+        <p class="mcard-desc">Беларусь сегодня — достижения и современные реалии</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">10 вопросов</span>
+          <div class="mcard-stars" id="stars-modern"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mcard" data-cat="puzzle" onclick="showScreen('screen-puzzle')">
+      <div class="mcard-num">04</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Пазл</h3>
+        <p class="mcard-desc">Собери портрет и узнай историю выдающейся белоруски</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">3 портрета</span>
+          <div class="mcard-stars" id="stars-puzzle"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mcard" data-cat="riddles" onclick="showScreen('screen-riddles')">
+      <div class="mcard-num">05</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Загадки</h3>
+        <p class="mcard-desc">Ребусы и загадки о культуре, природе и истории Беларуси</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">8 загадок</span>
+          <div class="mcard-stars" id="stars-riddles"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mcard" data-cat="flower" onclick="showScreen('screen-flower')">
+      <div class="mcard-num">06</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Цветок качеств</h3>
+        <p class="mcard-desc">Семь прекрасных граней белорусской женщины</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">7 качеств</span>
+        </div>
+      </div>
+    </div>
+    <div class="mcard mcard-results" onclick="showScreen('screen-results')">
+      <div class="mcard-num">&#9670;</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Мои результаты</h3>
+        <p class="mcard-desc">Достижения, уровень и итоговый счёт</p>
+        <div class="mcard-meta">
+          <span class="mcard-count" id="menu-total-score">0 очков</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ВИКТОРИНА ════════ -->
+<section id="screen-quiz" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="exitQuiz()">&#8592; Меню</button>
+    <div class="quiz-hud">
+      <div class="hud-timer" id="hud-timer">
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 56 56">
+            <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+            <circle id="timer-arc" cx="28" cy="28" r="24" fill="none" stroke="#C8102E" stroke-width="3"
+              stroke-dasharray="150.8" stroke-dashoffset="0" stroke-linecap="round"
+              transform="rotate(-90 28 28)"/>
+          </svg>
+          <span class="timer-num" id="timer-num">30</span>
+        </div>
+      </div>
+      <div class="hud-info">
+        <span class="hud-q">Вопрос <b id="q-num">1</b> / <b id="q-total">10</b></span>
+        <span class="hud-pts"><span id="quiz-pts">0</span> очков</span>
+      </div>
+    </div>
+  </header>
+  <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-prog-fill"></div></div>
+  <div class="quiz-wrap">
+    <div class="quiz-category-tag" id="quiz-cat-tag">Категория</div>
+    <h2 class="quiz-question" id="quiz-question">Вопрос загружается...</h2>
+    <div class="quiz-options" id="quiz-options"></div>
+    <div class="quiz-fact-box" id="quiz-fact-box" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ════════ ПАЗЛ ════════ -->
+<section id="screen-puzzle" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
+    <div class="top-bar-title">Пазл</div>
+  </header>
+  <div id="pz-selector">
+    <div class="page-head">
+      <h2 class="page-title">Выберите портрет</h2>
+      <div class="title-rule"></div>
+    </div>
+    <div class="pz-choices" id="pz-choices"></div>
+  </div>
+  <div id="pz-game" style="display:none">
+    <div class="pz-game-header">
+      <div class="pz-game-title" id="pz-game-title">Портрет</div>
+      <div class="pz-game-actions">
+        <button class="ghost-btn sm" onclick="shufflePuzzle()">Перемешать</button>
+        <button class="ghost-btn sm" onclick="initPuzzleScreen()">Другой</button>
+      </div>
+    </div>
+    <div class="pz-arena">
+      <div class="pz-col">
+        <div class="pz-col-label">Фрагменты</div>
+        <div class="pz-source" id="pz-source"></div>
+      </div>
+      <div class="pz-col">
+        <div class="pz-col-label">Собирайте здесь</div>
+        <div class="pz-canvas" id="pz-canvas"></div>
+        <div class="pz-progress-text" id="pz-progress-text">0 / 9 на месте</div>
+      </div>
+    </div>
+  </div>
+  <div class="pz-fact-overlay" id="pz-fact-overlay" style="display:none">
+    <div class="pz-fact-card">
+      <div class="pz-fact-label">Собрано!</div>
+      <h3 class="pz-fact-name" id="pz-fact-name"></h3>
+      <p class="pz-fact-text" id="pz-fact-text"></p>
+      <button class="cta-btn" onclick="nextPuzzle()">Следующий портрет</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ЗАГАДКИ ════════ -->
+<section id="screen-riddles" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
+    <div class="top-bar-score">
+      <span class="tbs-label">Загадка</span>
+      <span class="tbs-val"><span id="rd-num">1</span> / <span id="rd-total">8</span></span>
+    </div>
+  </header>
+  <div class="rd-wrap">
+    <div class="rd-card">
+      <div class="rd-number" id="rd-card-num">01</div>
+      <div class="rd-visual" id="rd-visual"></div>
+      <p class="rd-text" id="rd-text">Загадка...</p>
+      <div class="rd-input-row">
+        <input type="text" class="rd-input" id="rd-input" placeholder="Ваш ответ..." onkeydown="if(event.key==='Enter')checkRiddle()">
+        <button class="cta-btn sm" onclick="checkRiddle()">Проверить</button>
+      </div>
+      <div class="rd-hint-toggle" onclick="toggleHint()">Подсказка</div>
+      <div class="rd-hint" id="rd-hint" style="display:none"></div>
+      <div class="rd-feedback" id="rd-feedback" style="display:none"></div>
+    </div>
+    <div class="rd-nav">
+      <button class="ghost-btn sm" onclick="goRiddle(-1)">&#8592; Назад</button>
+      <div class="rd-dots" id="rd-dots"></div>
+      <button class="ghost-btn sm" onclick="goRiddle(1)">Далее &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ РЕЗУЛЬТАТЫ ════════ -->
+<section id="screen-results" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
+  </header>
+  <div class="results-wrap">
+    <div class="results-hero">
+      <div class="results-score-big" id="results-score-big">0</div>
+      <div class="results-score-label">очков</div>
+      <div class="results-level-tag" id="results-level-tag">Новичок</div>
+    </div>
+    <div class="results-rule"></div>
+    <h3 class="results-ach-title">Прогресс по разделам</h3>
+    <div class="ach-grid" id="ach-grid"></div>
+    <div class="results-actions">
+      <button class="cta-btn" onclick="showScreen('screen-menu')">К заданиям</button>
+      <button class="ghost-btn" onclick="confirmReset()">Сбросить прогресс</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ОВЕРЛЕЙ: итог викторины ════════ -->
+<div class="overlay" id="quiz-overlay" style="display:none">
+  <div class="overlay-panel">
+    <div class="ovl-grade" id="ovl-grade">Отлично</div>
+    <div class="ovl-score-num" id="ovl-score-num">0</div>
+    <div class="ovl-score-label">очков в этом раунде</div>
+    <div class="ovl-stars" id="ovl-stars"></div>
+    <div class="ovl-btns">
+      <button class="cta-btn" onclick="closeQuizOverlay()">Продолжить</button>
+      <button class="ghost-btn" onclick="retryQuiz()">Повторить</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════ ЦВЕТОК КАЧЕСТВ ════════ -->
+<section id="screen-flower" class="screen">
+  <header class="top-bar">
+    <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
+    <div class="top-bar-title">Цветок качеств</div>
+  </header>
+
+  <div class="flower-wrap">
+    <div class="flower-subtitle">Семь граней белорусской женщины</div>
+    <div class="flower-container" id="flower-container">
+      <!-- hexagons rendered by JS -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="flower-modal-bg" id="flower-modal-bg" onclick="closeFlowerModal()">
+    <div class="flower-modal" id="flower-modal" onclick="event.stopPropagation()">
+      <button class="flower-modal-close" onclick="closeFlowerModal()">&#215;</button>
+      <div class="flower-modal-icon" id="flower-modal-icon"></div>
+      <h3 class="flower-modal-title" id="flower-modal-title"></h3>
+      <p class="flower-modal-text" id="flower-modal-text"></p>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
