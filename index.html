@@ -8,21 +8,336 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="вспомогательное\style.css">
 <style>
+  /* ══════════════════════════════════════════
+     ГЛАВНАЯ СТРАНИЦА — РЕДИЗАЙН
+  ══════════════════════════════════════════ */
+
+  /* ── Оверлей-фон с орнаментом ── */
+  #screen-home {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Тонкая декоративная сетка-подложка */
+  #screen-home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(200, 16, 46, 0.06) 0%, transparent 55%),
+      radial-gradient(circle at 80% 30%, rgba(200, 16, 46, 0.04) 0%, transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Сетка главной ── */
+  .home-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px 0 0;
+    gap: 0;
+  }
+
+  /* ── ЛЕВАЯ КОЛОНКА — логотип ── */
+  .home-left-img {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding: 48px 16px 48px 0;
+    margin-left: -24px;
+    animation: fadeSlideLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Обёртка для позиционирования кружков вокруг логотипа */
+  .home-logo-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .home-logo-wrap::before {
+    content: '';
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 16, 46, 0.18);
+    animation: ringPulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .home-logo-wrap::after {
+    content: '';
+    position: absolute;
+    width: 88%;
+    height: 88%;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 16, 46, 0.09);
+    animation: ringPulse 4s ease-in-out infinite reverse;
+    pointer-events: none;
+  }
+
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.03); opacity: 0.6; }
+  }
+
+  .home-logo-img {
+    width: min(620px, 100%);
+    max-width: 620px;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home-logo-img:hover {
+    transform: scale(1.025) translateY(-4px);
+  }
+
+  /* ── ПРАВАЯ КОЛОНКА — текст ── */
+  .home-right-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 64px 48px 64px 32px;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  }
+
+  /* Верхний акцент — декоративная линия */
+  .home-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .home-eyebrow-line {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--red, #C8102E));
+    flex-shrink: 0;
+  }
+  .home-eyebrow-line.right {
+    background: linear-gradient(to left, transparent, var(--red, #C8102E));
+  }
+  .home-eyebrow-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red, #C8102E);
+    opacity: 0.9;
+  }
+
+  /* Бейдж года */
+  .year-badge {
+    display: block;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(24px, 3.2vw, 38px);
+    font-weight: 300;
+    letter-spacing: 10px;
+    color: var(--red, #C8102E);
+    opacity: 0.75;
+    margin-bottom: 10px;
+    width: 100%;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+  }
+
+  /* Заголовок */
+  .home-title {
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+    margin: 0 0 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .home-title .line-sm {
+    font-size: clamp(22px, 3.5vw, 42px);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 3px;
+    opacity: 0.7;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+  .home-title .line-lg {
+    font-size: clamp(44px, 7.5vw, 96px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 0.92;
+    background: linear-gradient(135deg, var(--text, #fff) 30%, rgba(200,16,46,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+  }
+  .home-title .line-md {
+    font-size: clamp(28px, 4.5vw, 58px);
+    font-weight: 600;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  }
+
+  /* Разделитель */
+  .home-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0 28px;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  }
+  .home-divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(200,16,46,0.4), transparent);
+    max-width: 80px;
+  }
+  .home-divider-diamond {
+    width: 6px; height: 6px;
+    background: var(--red, #C8102E);
+    transform: rotate(45deg);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* Описание */
+  .home-desc {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(13px, 1.4vw, 16px);
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.3px;
+    opacity: 0.72;
+    margin: 0 0 40px 0;
+    max-width: 420px;
+    text-align: center;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+  }
+
+  /* Кнопка CTA */
+  .home-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: fadeSlideRight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.48s both;
+  }
+
+  /* Переопределяем cta-btn только внутри home-actions */
+  .home-actions .cta-btn {
+    position: relative;
+    overflow: hidden;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 17px 44px;
+    border-radius: 3px;
+    background: var(--red, #C8102E);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 30px rgba(200,16,46,0.35);
+  }
+  .home-actions .cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .home-actions .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(200,16,46,0.5);
+  }
+  .home-actions .cta-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Счётчик — маленький инфо-тег */
+  .home-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.12);
+  }
+  .home-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--red, #C8102E);
+  }
+  .home-stat-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+
+  /* ── Анимации входа ── */
+  @keyframes fadeSlideLeft {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeSlideRight {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── Адаптив ── */
+  @media (max-width: 900px) {
+    .home-grid {
+      grid-template-columns: 1fr;
+      padding: 40px 24px 60px;
+      gap: 36px;
+    }
+    .home-left-img {
+      order: -1;
+      padding: 24px;
+    }
+    .home-logo-img {
+      max-width: 300px;
+    }
+    .home-left-img::before { width: 340px; height: 340px; }
+    .home-left-img::after  { width: 260px; height: 260px; }
+    .home-right-text {
+      padding: 0 8px 24px;
+      text-align: center;
+      align-items: center;
+    }
+    .home-eyebrow { justify-content: center; }
+    .home-desc { max-width: 100%; }
+    .home-divider-line { max-width: 50px; }
+  }
+
   /* ── НОВЫЕ КАРТОЧКИ ── */
-  /* 8 карточек: первые 6 идут в 3 колонки как раньше,
-     7-я и 8-я занимают по одной колонке, центрируются,
-     карточка результатов остаётся span всей строки */
   .menu-grid-inner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
-  .mcard-pair-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  /* Центрируем 2 карточки в строке из 3 колонок */
   .mcard-pair-row {
     display: flex;
     justify-content: center;
@@ -32,15 +347,11 @@
     flex: 0 0 calc(33.333% - 14px);
     max-width: calc(33.333% - 14px);
   }
-
-  /* Карточки "Ребусы" и "Угадай мелодию" — одинаковый стиль со всеми */
   .mcard-rebus,
   .mcard-music {
     border-color: var(--border-light);
     background: var(--surface);
   }
-
-  /* Пульсирующая нотка на карточке музыки */
   .music-note-badge {
     position: absolute;
     top: 20px; right: 20px;
@@ -54,8 +365,6 @@
     50%       { transform: scale(1.15) rotate(5deg); opacity: 0.32; }
   }
   .mcard-music:hover .music-note-badge { opacity: 0.5; }
-
-  /* "Скоро" бейдж на ребусах */
   .soon-badge {
     display: inline-block;
     font-family: var(--font-caps);
@@ -68,7 +377,6 @@
     vertical-align: middle;
     opacity: 0.8;
   }
-
   @media (max-width: 1024px) {
     .menu-grid-inner { grid-template-columns: repeat(2, 1fr); }
     .mcard-pair-row .mcard { flex: 0 0 calc(50% - 10px); max-width: calc(50% - 10px); }
@@ -87,21 +395,44 @@
 <!-- ════════ ГЛАВНАЯ ════════ -->
 <section id="screen-home" class="screen active">
   <div class="home-grid">
-    <div class="home-left">
+
+    <!-- ЛЕВАЯ — логотип (картинка) -->
+    <div class="home-left-img">
+      <div class="home-logo-wrap">
+        <img class="home-logo-img" src="вспомогательное/logo.png" alt="Год Белорусской Женщины">
+      </div>
+    </div>
+
+    <!-- ПРАВАЯ — текст -->
+    <div class="home-right-text">
       <div class="year-badge">2026</div>
+
+      <div class="home-eyebrow">
+        <span class="home-eyebrow-line"></span>
+        <span class="home-eyebrow-text">Интерактивная викторина</span>
+        <span class="home-eyebrow-line right"></span>
+      </div>
+
       <h1 class="home-title">
         <span class="line-sm">Год</span>
         <span class="line-lg">Белорусской</span>
         <span class="line-md">Женщины</span>
       </h1>
-      <p class="home-desc">Интерактивная викторина об истории, культуре и выдающихся женщинах Беларуси</p>
+
+      <div class="home-divider">
+        <span class="home-divider-line"></span>
+        <span class="home-divider-diamond"></span>
+      </div>
+
+      <p class="home-desc">
+        Интерактивная викторина об истории, культуре и выдающихся женщинах Беларуси
+      </p>
+
       <div class="home-actions">
         <button class="cta-btn" onclick="showScreen('screen-menu')">Начать игру</button>
       </div>
     </div>
-    <div class="home-right">
-      <img src="вспомогательное/logo.png" alt="">
-    </div>
+
   </div>
 </section>
 
@@ -185,7 +516,7 @@
       </div>
     </div>
 
-    <!-- Строка 3: карточки 07–08 (по краям, центрируется через сетку) -->
+    <!-- Строка 3: карточки 07–08 -->
     <div class="mcard mcard-rebus" data-cat="rebus" onclick="window.location.href='rebus.html'">
       <div class="mcard-num">07</div>
       <div class="mcard-body">
@@ -207,9 +538,7 @@
         </div>
       </div>
     </div>
-
-    <!-- Карточка результатов — всегда по центру -->
-    </div>
+  </div>
 </section>
 
 <!-- ════════ ВИКТОРИНА ════════ -->
@@ -313,7 +642,6 @@
       <button class="ghost-btn" onclick="showScreen('screen-menu')">К заданиям</button>
     </div>
   </div>
-
   <div class="rd-answer-overlay" id="rd-answer-overlay" style="display:none" onclick="closeRiddleAnswer()">
     <div class="rd-answer-card" onclick="event.stopPropagation()">
       <div class="rd-answer-label">Ответ</div>
@@ -323,7 +651,6 @@
     </div>
   </div>
 </section>
-
 
 <!-- ════════ ОВЕРЛЕЙ: итог викторины ════════ -->
 <div class="overlay" id="quiz-overlay" style="display:none">
@@ -345,14 +672,10 @@
     <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
     <div class="top-bar-title">Цветок качеств</div>
   </header>
-
   <div class="flower-wrap">
     <div class="flower-subtitle">Семь граней белорусской женщины</div>
-    <div class="flower-container" id="flower-container">
-      <!-- hexagons rendered by JS -->
-    </div>
+    <div class="flower-container" id="flower-container"></div>
   </div>
-
   <div class="flower-modal-bg" id="flower-modal-bg" onclick="closeFlowerModal()">
     <div class="flower-modal" id="flower-modal" onclick="event.stopPropagation()">
       <button class="flower-modal-close" onclick="closeFlowerModal()">&#215;</button>
