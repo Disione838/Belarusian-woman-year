@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ребусы — Год Белорусской Женщины 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   ГОД БЕЛОРУССКОЙ ЖЕНЩИНЫ — Rebus Page
+   Matching aesthetic: Crimson · Forest Green · Ivory · Gold
+   ══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+:root {
+  --red:          #C8102E;
+  --red-vivid:    #e0112f;
+  --red-dark:     #9a0d22;
+  --red-muted:    rgba(200,16,46,0.08);
+  --red-soft:     rgba(200,16,46,0.12);
+  --green:        #007A3D;
+  --green-vivid:  #00913f;
+  --green-muted:  rgba(0,122,61,0.1);
+  --green-soft:   rgba(0,122,61,0.06);
+  --gold:         #B8860B;
+  --gold-light:   #D4A843;
+  --gold-dim:     rgba(184,134,11,0.12);
+  --ivory:        #F7F3EB;
+  --warm-white:   #F7F3EB;
+  --linen:        #F7F3EB;
+  --bg:           #F7F3EB;
+  --surface:      #F7F3EB;
+  --border:       rgba(200,16,46,0.15);
+  --border-gold:  rgba(184,134,11,0.2);
+  --border-green: rgba(0,122,61,0.15);
+  --border-light: rgba(0,0,0,0.07);
+  --text:         #1C1008;
+  --text-2:       #6B5745;
+  --text-3:       #A08878;
+  --radius-sm:    10px;
+  --radius-md:    18px;
+  --radius-lg:    28px;
+  --shadow-red:   0 8px 40px rgba(200,16,46,0.18);
+  --shadow-green: 0 8px 40px rgba(0,122,61,0.14);
+  --shadow-card:  0 2px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-dark:  0 16px 60px rgba(0,0,0,0.15);
+  --transition:   0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --spring:       0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'Raleway', system-ui, sans-serif;
+  --font-caps:    'Playfair Display SC', Georgia, serif;
+  --font-num:     'Cormorant Garamond', Georgia, serif;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(0,122,61,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(200,16,46,0.04) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(251,248,242,0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky; top: 0; z-index: 20;
+}
+.top-bar::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red) 60%, var(--green) 60%);
+  opacity: 0.6;
+}
+
+.nav-back {
+  background: none; border: none;
+  font-family: var(--font-ui); font-size: 14px;
+  color: var(--text-2); cursor: pointer;
+  padding: 8px 16px; border-radius: 8px;
+  transition: 0.2s; letter-spacing: 0.5px;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-back:hover { color: var(--red); background: var(--red-muted); }
+
+.top-bar-counter {
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.tbs-label { font-size: 11px; letter-spacing: 2px; color: var(--text-3); text-transform: uppercase; }
+.tbs-val {
+  font-family: var(--font-num);
+  font-size: 24px; font-weight: 600; color: var(--green);
+  line-height: 1;
+}
+
+/* ── PROGRESS BAR ── */
+.rebus-progress-bar {
+  height: 3px;
+  background: var(--border-light);
+  position: relative; z-index: 1;
+}
+.rebus-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transition: width 0.6s var(--transition);
+  border-radius: 0 3px 3px 0;
+}
+
+/* ── MAIN LAYOUT ── */
+.rebus-page {
+  position: relative; z-index: 1;
+  min-height: calc(100vh - 73px);
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 72px;
+  animation: pageIn 0.5s var(--transition) both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PAGE HEADER ── */
+.rebus-page-head {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.rebus-section-badge {
+  font-family: var(--font-caps);
+  font-size: 10px; letter-spacing: 5px;
+  color: var(--green);
+  display: inline-block;
+  border-bottom: 1px solid var(--border-green);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.rebus-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.1;
+}
+.rebus-page-title span { color: var(--red); font-style: italic; }
+
+/* ── REBUS CARD ── */
+.rebus-card {
+  width: 100%;
+  max-width: 860px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-top: 4px solid var(--red);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+
+.rebus-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+}
+
+.rebus-num {
+  font-family: var(--font-num);
+  font-size: 48px;
+  font-weight: 700;
+  color: rgba(200,16,46,0.12);
+  line-height: 1;
+  transition: color var(--transition);
+}
+.rebus-num.active { color: var(--red); }
+
+.rebus-label {
+  font-family: var(--font-caps);
+  font-size: 10px; letter-spacing: 4px;
+  color: var(--text-3); text-transform: uppercase;
+}
+
+.rebus-status-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border-light);
+  border: 2px solid var(--border-light);
+  transition: all 0.3s;
+}
+.rebus-status-dot.answered {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 8px rgba(0,122,61,0.4);
+}
+
+/* ── IMAGE WINDOW ── */
+.rebus-image-window {
+  width: 100%;
+  min-height: 360px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rebus-image-window::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,16,46,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,16,46,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.rebus-img {
+  max-width: 100%;
+  max-height: 480px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+  position: relative; z-index: 1;
+  transition: opacity 0.4s ease, transform 0.4s var(--spring);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.rebus-img.loading { opacity: 0; transform: scale(0.96); }
+.rebus-img.loaded  { opacity: 1; transform: scale(1); }
+
+/* placeholder when image not found */
+.rebus-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px;
+  color: var(--text-3);
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.rebus-placeholder-icon {
+  font-size: 56px; opacity: 0.35;
+}
+.rebus-placeholder-text {
+  font-family: var(--font-display);
+  font-size: 20px; font-style: italic;
+  color: var(--text-3);
+}
+.rebus-placeholder-hint {
+  font-size: 12px; letter-spacing: 1px;
+  color: var(--text-3); opacity: 0.7;
+}
+
+/* ── FOOTER ACTIONS ── */
+.rebus-card-footer {
+  padding: 24px 32px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #fff 0%, var(--ivory) 100%);
+}
+
+.rebus-actions-left { display: flex; gap: 10px; flex-wrap: wrap; }
+.rebus-actions-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ── BUTTONS ── */
+.cta-btn {
+  font-family: var(--font-ui);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  background: var(--red);
+  color: #fff;
+  border: none; border-radius: 50px;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: var(--spring);
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(200,16,46,0.3);
+}
+.cta-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(255,255,255,0.18), transparent 60%);
+  pointer-events: none;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,16,46,0.4); background: var(--red-vivid); }
+.cta-btn:active { transform: translateY(0); }
+.cta-btn:disabled { opacity: 0.4; pointer-events: none; }
+
+.cta-btn.green {
+  background: var(--green);
+  box-shadow: 0 4px 20px rgba(0,122,61,0.28);
+}
+.cta-btn.green:hover { background: var(--green-vivid); box-shadow: var(--shadow-green); }
+
+.ghost-btn {
+  font-family: var(--font-ui);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  background: transparent;
+  color: var(--text-2);
+  border: 1.5px solid var(--border-light);
+  border-radius: 50px;
+  padding: 13px 28px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.ghost-btn:hover { color: var(--red); border-color: var(--red); background: var(--red-muted); }
+.ghost-btn:disabled { opacity: 0.4; pointer-events: none; }
+
+.ghost-btn.gold-btn {
+  color: var(--gold);
+  border-color: var(--border-gold);
+}
+.ghost-btn.gold-btn:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+/* ── ANSWER OVERLAY ── */
+.answer-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(247,243,235,0.88);
+  backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.answer-overlay.open { opacity: 1; pointer-events: all; }
+
+.answer-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-top: 4px solid var(--green);
+  border-radius: var(--radius-lg);
+  padding: 56px 52px;
+  max-width: 520px; width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-dark);
+  transform: scale(0.88) translateY(20px);
+  transition: transform 0.4s var(--spring);
+  position: relative;
+}
+.answer-overlay.open .answer-card { transform: scale(1) translateY(0); }
+
+.answer-badge {
+  font-family: var(--font-caps);
+  font-size: 10px; letter-spacing: 5px;
+  color: var(--green);
+  display: inline-block;
+  border-bottom: 1px solid var(--border-green);
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.answer-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+  animation: popIn 0.4s var(--spring) both;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.6) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.answer-text {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.answer-explain {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 36px;
+}
+
+.answer-btns {
+  display: flex; gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.answer-close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none;
+  font-size: 22px; color: var(--text-3);
+  cursor: pointer; line-height: 1;
+  transition: color 0.2s, transform 0.2s;
+  padding: 4px;
+}
+.answer-close:hover { color: var(--red); transform: rotate(90deg); }
+
+/* ── DOTS NAV ── */
+.rebus-dots {
+  display: flex; gap: 8px;
+  justify-content: center;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.rdot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border-light);
+  border: 1.5px solid rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s var(--spring);
+}
+.rdot.active {
+  background: var(--red);
+  border-color: var(--red);
+  transform: scale(1.4);
+  box-shadow: 0 0 8px rgba(200,16,46,0.4);
+}
+.rdot.done {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+/* ── COMPLETION SCREEN ── */
+.completion-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 24px;
+  gap: 24px;
+  animation: pageIn 0.5s var(--transition) both;
+}
+.completion-screen.visible { display: flex; }
+
+.completion-ornament {
+  font-size: 64px;
+  animation: popIn 0.5s var(--spring) both;
+}
+.completion-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+.completion-title span { color: var(--red); font-style: italic; }
+.completion-subtitle {
+  font-family: var(--font-caps);
+  font-size: 11px; letter-spacing: 5px;
+  color: var(--green);
+}
+.completion-desc {
+  font-size: 16px; color: var(--text-2);
+  line-height: 1.7; font-weight: 300;
+  max-width: 400px;
+}
+.completion-score {
+  font-family: var(--font-num);
+  font-size: 80px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+}
+.completion-score-label {
+  font-size: 14px; color: var(--text-3);
+  letter-spacing: 1px; margin-top: -8px;
+}
+.completion-rule {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+}
+.completion-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--linen); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .top-bar { padding: 16px 24px; }
+  .rebus-page { padding: 32px 16px 60px; }
+  .rebus-card-header { padding: 16px 20px; }
+  .rebus-image-window { min-height: 240px; padding: 28px 20px; }
+  .rebus-card-footer { padding: 18px 20px; flex-direction: column; align-items: stretch; }
+  .rebus-actions-left, .rebus-actions-right { justify-content: center; }
+  .answer-card { padding: 40px 24px; }
+  .rebus-num { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="top-bar">
+  <a class="nav-back" href="index.html#menu">&#8592; Меню</a>
+  <div class="top-bar-counter">
+    <span class="tbs-label">Ребус</span>
+    <span class="tbs-val"><span id="rebus-cur">1</span> / <span id="rebus-total">8</span></span>
+  </div>
+</header>
+
+<!-- ── PROGRESS ── -->
+<div class="rebus-progress-bar">
+  <div class="rebus-progress-fill" id="rebus-prog-fill" style="width:0%"></div>
+</div>
+
+<!-- ════════ MAIN CONTENT ════════ -->
+<main class="rebus-page" id="rebus-page">
+
+  <!-- Page heading -->
+  <div class="rebus-page-head">
+    <div class="rebus-section-badge">Задание</div>
+    <h1 class="rebus-page-title">Реши <span>ребус</span></h1>
+  </div>
+
+  <!-- Rebus Card -->
+  <div class="rebus-card" id="rebus-card">
+
+    <!-- Card header -->
+    <div class="rebus-card-header">
+      <div>
+        <div class="rebus-num" id="rebus-num-display">01</div>
+        <div class="rebus-label">Ребус</div>
+      </div>
+      <div id="status-dot" class="rebus-status-dot"></div>
+    </div>
+
+    <!-- Image window -->
+    <div class="rebus-image-window" id="rebus-image-window">
+      <img
+        id="rebus-img"
+        class="rebus-img loading"
+        src=""
+        alt="Ребус"
+        onerror="showPlaceholder()"
+        onload="onImageLoaded()"
+      />
+      <div class="rebus-placeholder" id="rebus-placeholder" style="display:none">
+        <div class="rebus-placeholder-icon">🧩</div>
+        <div class="rebus-placeholder-text">Добавьте картинку ребуса</div>
+        <div class="rebus-placeholder-hint">rebus<span id="placeholder-num">1</span>.png</div>
+      </div>
+    </div> 
+
+    <!-- Footer actions -->
+    <div class="rebus-card-footer">
+      <div class="rebus-actions-left">
+        <button class="cta-btn" id="btn-answer" onclick="showAnswer()">Ответ</button>
+        <button class="ghost-btn gold-btn" id="btn-hint" onclick="showHint()">Подсказка</button>
+      </div>
+      <div class="rebus-actions-right">
+        <button class="ghost-btn" id="btn-prev" onclick="goRebus(-1)" disabled>&#8592; Назад</button>
+        <button class="cta-btn green" id="btn-next" onclick="goRebus(1)">Продолжить &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dots navigation -->
+  <div class="rebus-dots" id="rebus-dots"></div>
+
+</main>
+
+<!-- ── COMPLETION SCREEN ── -->
+<div class="completion-screen" id="completion-screen">
+  <div class="completion-ornament">🌺</div>
+  <div class="completion-subtitle">Всё решено!</div>
+  <h2 class="completion-title">Молодец,<br><span>Отлично!</span></h2>
+  <div class="completion-rule"></div>
+  <div class="completion-score" id="comp-score">0</div>
+  <div class="completion-score-label">ребусов разгадано</div>
+  <p class="completion-desc">Ты успешно прошел все ребусы этого раздела. Удивительно!</p>
+  <div class="completion-rule"></div>
+  <div class="completion-actions">
+    <button class="cta-btn" onclick="restartRebus()">Пройти снова</button>
+    <button class="ghost-btn" onclick="window.location.href='index.html#menu'">К заданиям</button>
+  </div>
+</div>
+
+<!-- ── ANSWER OVERLAY ── -->
+<div class="answer-overlay" id="answer-overlay">
+  <div class="answer-card">
+    <button class="answer-close" onclick="closeAnswer()">&#215;</button>
+    <div class="answer-badge">Правильный ответ</div>
+    <div class="answer-icon" id="answer-icon">✨</div>
+    <div class="answer-text" id="answer-text">Ответ</div>
+    <p class="answer-explain" id="answer-explain"></p>
+    <div class="answer-btns">
+      <button class="cta-btn green" onclick="closeAndNext()">Продолжить &#8594;</button>
+      <button class="ghost-btn" onclick="closeAnswer()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════
+   ДАННЫЕ РЕБУСОВ
+   Заполните answer (ответ), explain (пояснение) и hint (подсказка).
+   Картинки: rebus1.png, rebus2.png ... кладите в папку с проектом.
+═══════════════════════════════ */
+const rebuses = [
+  {
+    img:     'ребусы/rebus1.png',
+    answer:  'Аист',
+    explain: 'Аист — это крупная птица с длинными ногами и клювом, символ семьи и рождения детей.',
+    hint:    'Это птица, которая по легенде приносит детей.',
+    icon:    '🌸'
+  },
+  {
+    img:     'ребусы/rebus2.png',
+    answer:  'Белоруска',
+    explain: 'Белоруска — это женщина, которая является гражданкой или представительницей народа Беларуси.',
+    hint:    'Женщина из Беларуси.',
+    icon:    '🌿'
+  },
+  {
+    img:     'ребусы/rebus3.png',
+    answer:  'Венок',
+    explain: 'Венок — это украшение из цветов, листьев или веток, которое надевают на голову или используют как декор.',
+    hint:    'Украшение из цветов, которое надевают на голову.',
+    icon:    '🦋'
+  },
+  {
+    img:     'ребусы/rebus4.png',
+    answer:  'Доброта',
+    explain: 'Доброта — это качество человека, выражающееся в заботе, отзывчивости и желании помогать другим.',
+    hint:    'Качество человека, связанное с заботой и теплом.',
+    icon:    '🌻'
+  },
+  {
+    img:     'ребусы/rebus5.png',
+    answer:  'Драники',
+    explain: 'Драники — это традиционное блюдо из тёртого картофеля, обжаренного на сковороде.',
+    hint:    'Белорусское блюдо из картофеля.',
+    icon:    '🎀'
+  },
+  {
+    img:     'ребусы/rebus6.png',
+    answer:  'Любимая',
+    explain: 'Любимая — это женщина, к которой испытывают сильные чувства любви и привязанности.',
+    hint:    'Так называют дорогого сердцу человека (женского рода).',
+    icon:    '🌺'
+  },
+  {
+    img:     'ребусы/rebus7.png',
+    answer:  'Мама',
+    explain: 'Мама — это женщина-родитель, самый близкий человек в жизни ребёнка.',
+    hint:    'Самый близкий человек с детства.',
+    icon:    '🍀'
+  },
+  {
+    img:     'ребусы/rebus8.png',
+    answer:  'Прялка',
+    explain: 'Прялка — это старинное устройство, с помощью которого пряли нити из шерсти или льна.',
+    hint:    'Старинный предмет для изготовления нитей.',
+    icon:    '⭐'
+  },
+  {
+    img:     'ребусы/rebus9.png',
+    answer:  'Стас Михайлов',
+    explain: 'Стас Михайлов — это известный эстрадный певец, исполняющий популярные песни.',
+    hint:    'Популярный российский певец Стас.',
+    icon:    '⭐'
+  },
+  {
+    img:     'ребусы/rebus10.png',
+    answer:  'Труженица',
+    explain: 'Труженица — это женщина, которая много и усердно работает.',
+    hint:    'Женщина, которая много работает.',
+    icon:    '⭐'
+  },
+];
+
+/* ── STATE ── */
+let current   = 0;
+let answered  = new Array(rebuses.length).fill(false);
+let hintShown = new Array(rebuses.length).fill(false);
+
+/* ── INIT ── */
+function init() {
+  document.getElementById('rebus-total').textContent = rebuses.length;
+  buildDots();
+  renderRebus(0);
+}
+
+/* ── BUILD DOTS ── */
+function buildDots() {
+  const wrap = document.getElementById('rebus-dots');
+  wrap.innerHTML = '';
+  rebuses.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'rdot';
+    d.title = `Ребус ${i + 1}`;
+    d.onclick = () => goTo(i);
+    wrap.appendChild(d);
+  });
+  updateDots();
+}
+
+function updateDots() {
+  document.querySelectorAll('.rdot').forEach((d, i) => {
+    d.className = 'rdot' + (i === current ? ' active' : '') + (answered[i] ? ' done' : '');
+  });
+}
+
+/* ── RENDER ── */
+function renderRebus(idx) {
+  const r = rebuses[idx];
+  const numStr = String(idx + 1).padStart(2, '0');
+
+  // counter
+  document.getElementById('rebus-cur').textContent = idx + 1;
+
+  // big number
+  const numEl = document.getElementById('rebus-num-display');
+  numEl.textContent = numStr;
+  numEl.className = 'rebus-num active';
+
+  // status dot
+  document.getElementById('status-dot').className =
+    'rebus-status-dot' + (answered[idx] ? ' answered' : '');
+
+  // progress bar
+  const pct = ((idx) / rebuses.length) * 100;
+  document.getElementById('rebus-prog-fill').style.width = pct + '%';
+
+  // image
+  document.getElementById('placeholder-num').textContent = idx + 1;
+  document.getElementById('rebus-placeholder').style.display = 'none';
+  const img = document.getElementById('rebus-img');
+  img.className = 'rebus-img loading';
+  img.style.display = 'block';
+  img.src = r.img;
+
+  // buttons
+  document.getElementById('btn-prev').disabled = (idx === 0);
+  document.getElementById('btn-next').textContent =
+    idx === rebuses.length - 1 ? 'Завершить ✓' : 'Продолжить →';
+
+  // hint button — reset text
+  document.getElementById('btn-hint').textContent = hintShown[idx] ? 'Подсказка дана' : 'Подсказка';
+
+  updateDots();
+}
+
+/* ── IMAGE EVENTS ── */
+function onImageLoaded() {
+  const img = document.getElementById('rebus-img');
+  img.className = 'rebus-img loaded';
+}
+function showPlaceholder() {
+  document.getElementById('rebus-img').style.display = 'none';
+  document.getElementById('rebus-placeholder').style.display = 'flex';
+}
+
+/* ── NAVIGATION ── */
+function goTo(idx) {
+  if (idx < 0 || idx >= rebuses.length) return;
+  current = idx;
+  renderRebus(current);
+}
+function goRebus(dir) {
+  const next = current + dir;
+  if (next >= rebuses.length) {
+    showCompletion(); return;
+  }
+  if (next < 0) return;
+  goTo(next);
+}
+
+/* ── ANSWER ── */
+function showAnswer() {
+  const r = rebuses[current];
+  document.getElementById('answer-icon').textContent  = r.icon;
+  document.getElementById('answer-text').textContent  = r.answer;
+  document.getElementById('answer-explain').textContent = r.explain;
+  document.getElementById('answer-overlay').classList.add('open');
+
+  // mark as answered
+  answered[current] = true;
+  document.getElementById('status-dot').className = 'rebus-status-dot answered';
+  updateDots();
+}
+
+function closeAnswer() {
+  document.getElementById('answer-overlay').classList.remove('open');
+}
+
+function closeAndNext() {
+  closeAnswer();
+  setTimeout(() => goRebus(1), 300);
+}
+
+/* ── HINT ── */
+function showHint() {
+  const r = rebuses[current];
+  hintShown[current] = true;
+  document.getElementById('btn-hint').textContent = 'Подсказка дана';
+
+  // Temporarily show hint in answer card as non-answer
+  document.getElementById('answer-icon').textContent   = '';
+  document.getElementById('answer-text').textContent   = 'Подсказка';
+  document.getElementById('answer-explain').textContent = r.hint;
+  // Swap card top color to gold via inline style
+  const card = document.querySelector('.answer-card');
+  card.style.borderTopColor = 'var(--gold)';
+  document.querySelector('.answer-badge').textContent = 'Подсказка';
+  document.querySelector('.answer-badge').style.color = 'var(--gold)';
+  document.querySelector('.answer-badge').style.borderColor = 'var(--border-gold)';
+
+  document.getElementById('answer-overlay').classList.add('open');
+
+  // Restore styles when closed
+  document.querySelectorAll('.answer-btns button')[0].onclick = function() {
+    resetAnswerCard();
+    closeAnswer();
+    resetAnswerCard();
+  };
+}
+
+function resetAnswerCard() {
+  const card = document.querySelector('.answer-card');
+  card.style.borderTopColor = '';
+  const badge = document.querySelector('.answer-badge');
+  badge.textContent = 'Правильный ответ';
+  badge.style.color = '';
+  badge.style.borderColor = '';
+  document.querySelectorAll('.answer-btns button')[0].onclick = closeAndNext;
+}
+
+/* ── COMPLETION ── */
+function showCompletion() {
+  document.getElementById('rebus-page').style.display = 'none';
+  const score = answered.filter(Boolean).length;
+  document.getElementById('comp-score').textContent = score;
+  const comp = document.getElementById('completion-screen');
+  comp.classList.add('visible');
+  // full progress
+  document.getElementById('rebus-prog-fill').style.width = '100%';
+}
+
+function restartRebus() {
+  current   = 0;
+  answered  = new Array(rebuses.length).fill(false);
+  hintShown = new Array(rebuses.length).fill(false);
+  document.getElementById('completion-screen').classList.remove('visible');
+  document.getElementById('rebus-page').style.display = 'flex';
+  renderRebus(0);
+  buildDots();
+}
+
+/* ── ESC to close overlay ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeAnswer(); resetAnswerCard(); }
+  if (e.key === 'ArrowRight') goRebus(1);
+  if (e.key === 'ArrowLeft')  goRebus(-1);
+});
+
+/* ── CLICK outside answer card ── */
+document.getElementById('answer-overlay').addEventListener('click', function(e) {
+  if (e.target === this) { closeAnswer(); resetAnswerCard(); }
+});
+
+/* ── START ── */
+init();
+</script>
+</body>
+</html>

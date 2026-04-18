@@ -5,8 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Год Белорусской Женщины — 2025</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="вспомогательное\style.css">
+<style>
+  /* ── НОВЫЕ КАРТОЧКИ ── */
+  /* 8 карточек: первые 6 идут в 3 колонки как раньше,
+     7-я и 8-я занимают по одной колонке, центрируются,
+     карточка результатов остаётся span всей строки */
+  .menu-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .mcard-pair-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  /* Центрируем 2 карточки в строке из 3 колонок */
+  .mcard-pair-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .mcard-pair-row .mcard {
+    flex: 0 0 calc(33.333% - 14px);
+    max-width: calc(33.333% - 14px);
+  }
+
+  /* Карточки "Ребусы" и "Угадай мелодию" — одинаковый стиль со всеми */
+  .mcard-rebus,
+  .mcard-music {
+    border-color: var(--border-light);
+    background: var(--surface);
+  }
+
+  /* Пульсирующая нотка на карточке музыки */
+  .music-note-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 28px;
+    opacity: 0.18;
+    animation: notePulse 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes notePulse {
+    0%, 100% { transform: scale(1) rotate(-5deg); opacity: 0.18; }
+    50%       { transform: scale(1.15) rotate(5deg); opacity: 0.32; }
+  }
+  .mcard-music:hover .music-note-badge { opacity: 0.5; }
+
+  /* "Скоро" бейдж на ребусах */
+  .soon-badge {
+    display: inline-block;
+    font-family: var(--font-caps);
+    font-size: 9px; letter-spacing: 2px;
+    color: var(--green);
+    border: 1px solid var(--border-green);
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 1024px) {
+    .menu-grid-inner { grid-template-columns: repeat(2, 1fr); }
+    .mcard-pair-row .mcard { flex: 0 0 calc(50% - 10px); max-width: calc(50% - 10px); }
+  }
+  @media (max-width: 720px) {
+    .menu-grid-inner { grid-template-columns: 1fr; }
+    .mcard-pair-row { flex-direction: column; }
+    .mcard-pair-row .mcard { flex: 1 1 auto; max-width: 100%; }
+  }
+</style>
 </head>
 <body>
 
@@ -23,17 +95,12 @@
         <span class="line-md">Женщины</span>
       </h1>
       <p class="home-desc">Интерактивная викторина об истории, культуре и выдающихся женщинах Беларуси</p>
-      <div class="home-score-row" id="home-score-row" style="display:none">
-        <div class="hs-score"><span class="hs-num" id="hs-num">0</span> очков</div>
-        <div class="hs-level" id="hs-level">Новичок</div>
-      </div>
       <div class="home-actions">
         <button class="cta-btn" onclick="showScreen('screen-menu')">Начать игру</button>
-        <button class="ghost-btn" onclick="showScreen('screen-results')">Результаты</button>
       </div>
     </div>
     <div class="home-right">
-      <img src="logo.png" alt="">
+      <img src="вспомогательное/logo.png" alt="">
     </div>
   </div>
 </section>
@@ -42,23 +109,21 @@
 <section id="screen-menu" class="screen">
   <header class="top-bar">
     <button class="nav-back" onclick="showScreen('screen-home')">&#8592; Главная</button>
-    <div class="top-bar-score">
-      <span class="tbs-label">Очки</span>
-      <span class="tbs-val" id="menu-score-val">0</span>
-    </div>
   </header>
   <div class="page-head">
     <h2 class="page-title">Выберите задание</h2>
     <div class="title-rule"></div>
   </div>
-  <div class="menu-grid" id="menu-grid">
+
+  <div class="menu-grid">
+    <!-- Строка 1: карточки 01–03 -->
     <div class="mcard" data-cat="famous" onclick="startQuiz('famous')">
       <div class="mcard-num">01</div>
       <div class="mcard-body">
         <h3 class="mcard-title">Известные женщины</h3>
         <p class="mcard-desc">Выдающиеся белоруски, вписавшие своё имя в историю</p>
         <div class="mcard-meta">
-          <span class="mcard-count">10 вопросов</span>
+          <span class="mcard-count">20 вопросов</span>
           <div class="mcard-stars" id="stars-famous"></div>
         </div>
       </div>
@@ -69,7 +134,7 @@
         <h3 class="mcard-title">История и культура</h3>
         <p class="mcard-desc">Традиции, праздники и культурное наследие Беларуси</p>
         <div class="mcard-meta">
-          <span class="mcard-count">10 вопросов</span>
+          <span class="mcard-count">20 вопросов</span>
           <div class="mcard-stars" id="stars-history"></div>
         </div>
       </div>
@@ -80,11 +145,13 @@
         <h3 class="mcard-title">Современность</h3>
         <p class="mcard-desc">Беларусь сегодня — достижения и современные реалии</p>
         <div class="mcard-meta">
-          <span class="mcard-count">10 вопросов</span>
+          <span class="mcard-count">20 вопросов</span>
           <div class="mcard-stars" id="stars-modern"></div>
         </div>
       </div>
     </div>
+
+    <!-- Строка 2: карточки 04–06 -->
     <div class="mcard" data-cat="puzzle" onclick="showScreen('screen-puzzle')">
       <div class="mcard-num">04</div>
       <div class="mcard-body">
@@ -117,17 +184,32 @@
         </div>
       </div>
     </div>
-    <div class="mcard mcard-results" onclick="showScreen('screen-results')">
-      <div class="mcard-num">&#9670;</div>
+
+    <!-- Строка 3: карточки 07–08 (по краям, центрируется через сетку) -->
+    <div class="mcard mcard-rebus" data-cat="rebus" onclick="window.location.href='rebus.html'">
+      <div class="mcard-num">07</div>
       <div class="mcard-body">
-        <h3 class="mcard-title">Мои результаты</h3>
-        <p class="mcard-desc">Достижения, уровень и итоговый счёт</p>
+        <h3 class="mcard-title">Ребусы</h3>
+        <p class="mcard-desc">Разгадай зашифрованные слова и образы, связанные с Беларусью</p>
         <div class="mcard-meta">
-          <span class="mcard-count" id="menu-total-score">0 очков</span>
+          <span class="mcard-count">8 ребусов</span>
         </div>
       </div>
     </div>
-  </div>
+    <div class="mcard mcard-music" data-cat="music" onclick="window.location.href='music.html'">
+      <div class="music-note-badge">♪</div>
+      <div class="mcard-num">08</div>
+      <div class="mcard-body">
+        <h3 class="mcard-title">Угадай мелодию</h3>
+        <p class="mcard-desc">Слушай отрывок и выбирай правильный ответ — проверь музыкальный слух</p>
+        <div class="mcard-meta">
+          <span class="mcard-count">20 мелодий</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Карточка результатов — всегда по центру -->
+    </div>
 </section>
 
 <!-- ════════ ВИКТОРИНА ════════ -->
@@ -218,48 +300,36 @@
       <div class="rd-number" id="rd-card-num">01</div>
       <div class="rd-visual" id="rd-visual"></div>
       <p class="rd-text" id="rd-text">Загадка...</p>
-      <div class="rd-input-row">
-        <input type="text" class="rd-input" id="rd-input" placeholder="Ваш ответ..." onkeydown="if(event.key==='Enter')checkRiddle()">
-        <button class="cta-btn sm" onclick="checkRiddle()">Проверить</button>
+      <div class="rd-actions">
+        <button class="cta-btn" onclick="showRiddleAnswer()">Показать ответ</button>
       </div>
-      <div class="rd-hint-toggle" onclick="toggleHint()">Подсказка</div>
-      <div class="rd-hint" id="rd-hint" style="display:none"></div>
-      <div class="rd-feedback" id="rd-feedback" style="display:none"></div>
     </div>
     <div class="rd-nav">
-      <button class="ghost-btn sm" onclick="goRiddle(-1)">&#8592; Назад</button>
+      <button class="ghost-btn sm" id="rd-back-btn" onclick="goRiddle(-1)">&#8592; Назад</button>
       <div class="rd-dots" id="rd-dots"></div>
-      <button class="ghost-btn sm" onclick="goRiddle(1)">Далее &#8594;</button>
+      <button class="ghost-btn sm" id="rd-next-btn" onclick="goRiddle(1)">Далее &#8594;</button>
+    </div>
+    <div class="rd-to-menu-row">
+      <button class="ghost-btn" onclick="showScreen('screen-menu')">К заданиям</button>
+    </div>
+  </div>
+
+  <div class="rd-answer-overlay" id="rd-answer-overlay" style="display:none" onclick="closeRiddleAnswer()">
+    <div class="rd-answer-card" onclick="event.stopPropagation()">
+      <div class="rd-answer-label">Ответ</div>
+      <div class="rd-answer-text" id="rd-answer-text"></div>
+      <p class="rd-answer-explain" id="rd-answer-explain"></p>
+      <button class="cta-btn" id="rd-answer-next-btn" onclick="riddleAnswerNext()">Следующая загадка</button>
     </div>
   </div>
 </section>
 
-<!-- ════════ РЕЗУЛЬТАТЫ ════════ -->
-<section id="screen-results" class="screen">
-  <header class="top-bar">
-    <button class="nav-back" onclick="showScreen('screen-menu')">&#8592; Меню</button>
-  </header>
-  <div class="results-wrap">
-    <div class="results-hero">
-      <div class="results-score-big" id="results-score-big">0</div>
-      <div class="results-score-label">очков</div>
-      <div class="results-level-tag" id="results-level-tag">Новичок</div>
-    </div>
-    <div class="results-rule"></div>
-    <h3 class="results-ach-title">Прогресс по разделам</h3>
-    <div class="ach-grid" id="ach-grid"></div>
-    <div class="results-actions">
-      <button class="cta-btn" onclick="showScreen('screen-menu')">К заданиям</button>
-      <button class="ghost-btn" onclick="confirmReset()">Сбросить прогресс</button>
-    </div>
-  </div>
-</section>
 
 <!-- ════════ ОВЕРЛЕЙ: итог викторины ════════ -->
 <div class="overlay" id="quiz-overlay" style="display:none">
   <div class="overlay-panel">
     <div class="ovl-grade" id="ovl-grade">Отлично</div>
-    <div class="ovl-score-num" id="ovl-score-num">0</div>
+    <div id="ovl-score-num" style="font-family: 'Nunito', system-ui, sans-serif; font-size: 50px; font-weight: 700;">0</div>
     <div class="ovl-score-label">очков в этом раунде</div>
     <div class="ovl-stars" id="ovl-stars"></div>
     <div class="ovl-btns">
@@ -268,7 +338,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- ════════ ЦВЕТОК КАЧЕСТВ ════════ -->
 <section id="screen-flower" class="screen">
@@ -284,7 +353,6 @@
     </div>
   </div>
 
-  <!-- Modal -->
   <div class="flower-modal-bg" id="flower-modal-bg" onclick="closeFlowerModal()">
     <div class="flower-modal" id="flower-modal" onclick="event.stopPropagation()">
       <button class="flower-modal-close" onclick="closeFlowerModal()">&#215;</button>
@@ -295,6 +363,6 @@
   </div>
 </section>
 
-<script src="script.js"></script>
+<script src="вспомогательное/script.js"></script>
 </body>
 </html>
